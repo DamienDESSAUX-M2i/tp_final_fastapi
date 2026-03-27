@@ -5,14 +5,14 @@ from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
-from app.core.config import get_settings
+from app.core.settings import get_settings
 
 
 class Base(DeclarativeBase):
     pass
 
 
-def get_engine():
+def _get_engine():
     settings = get_settings()
 
     Path(settings.database_path).parent.mkdir(parents=True, exist_ok=True)
@@ -26,14 +26,14 @@ def get_engine():
 
 
 @lru_cache
-def get_engine_cached():
-    return get_engine()
+def get_engine():
+    return _get_engine()
 
 
 @lru_cache
 def get_session_maker():
     return sessionmaker(
-        bind=get_engine_cached(),
+        bind=get_engine(),
         autocommit=False,
         autoflush=False,
         expire_on_commit=False,
@@ -41,12 +41,9 @@ def get_session_maker():
     )
 
 
-SessionLocal = get_session_maker()
-
-
 def get_db() -> Generator[Session, None, None]:
     """Provide a database session"""
-    db = SessionLocal()
+    db = get_session_maker()
     try:
         yield db
     finally:

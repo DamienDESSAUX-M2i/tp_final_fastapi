@@ -2,8 +2,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.core.config import get_settings
 from app.core.database import Base, get_engine
+from app.core.settings import get_settings
 from app.routers import auth, private, public
 from app.utils.set_up_log import get_logger, set_up_logging
 

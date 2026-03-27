@@ -6,7 +6,7 @@ from typing import Any, Dict
 
 import jwt
 
-from app.core.config import get_settings
+from app.core.settings import get_settings
 
 
 def hash_password(password: str) -> str:

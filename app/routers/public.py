@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.schemas.public import InfoResponse, PingResponse, SecurityInfoResponse
+from app.schemas.utils import InfoResponse, PingResponse, SecurityInfoResponse
 
 router = APIRouter(prefix="/public", tags=["Public"])
 
