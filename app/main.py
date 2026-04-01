@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from app.core.database import Base, get_engine
 from app.core.settings import get_settings
-from app.routers import auth, private, public
+from app.routers import auth, private_user, public
 from app.utils.set_up_log import get_logger, set_up_logging
 
 
@@ -39,7 +39,7 @@ def create_app() -> FastAPI:
 
     app.include_router(public.router)
     app.include_router(auth.router)
-    app.include_router(private.router)
+    app.include_router(private_user.router)
 
     return app
 
