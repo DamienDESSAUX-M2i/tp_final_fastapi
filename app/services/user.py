@@ -1,11 +1,12 @@
 from typing import Optional
 
-from app.core.security import hash_password
-from app.models.user import User, UserRole
 from sqlalchemy.orm import Session
 
+from app.core.security import hash_password
+from app.models.user import User, UserRole
 
-def get_user_by_username(db: Session, username: str) -> Optional[User]:
+
+def get_user_by_name(db: Session, username: str) -> Optional[User]:
     """Recherche un utilisateur par son nom d'utilisateur"""
     return db.query(User).filter(User.username == username).first()
 

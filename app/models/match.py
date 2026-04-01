@@ -34,7 +34,7 @@ class Match(Base):
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    place: Mapped[str] = mapped_column(String(100), nullable=False)
     date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,

@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, model_validator
 
 
 class MatchBase(BaseModel):
-    name: str = Field(..., min_length=1, max_length=50)
+    place: str = Field(..., min_length=1, max_length=100)
     date: datetime
     team_one_id: int
     team_two_id: int
@@ -24,7 +24,7 @@ class MatchCreate(MatchBase):
 
 
 class MatchUpdate(BaseModel):
-    name: Optional[str] = Field(None, min_length=1, max_length=50)
+    place: Optional[str] = Field(None, min_length=1, max_length=100)
     date: Optional[datetime]
     team_one_id: Optional[int]
     team_two_id: Optional[int]
