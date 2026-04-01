@@ -6,23 +6,21 @@ from app.models import UserRole
 class UserRegister(BaseModel):
     """Données attendues pour l'inscription d'un nouvel utilisateur."""
 
-    username: str = Field(..., min_length=3, max_length=50)
+    name: str = Field(..., min_length=3, max_length=50)
     password: str = Field(..., min_length=6, max_length=128)
 
 
 class UserLogin(BaseModel):
     """Données attendues pour la connexion."""
 
-    username: str = Field(..., min_length=3, max_length=50)
+    name: str = Field(..., min_length=3, max_length=50)
     password: str = Field(..., min_length=6, max_length=128)
 
 
 class UserPublic(BaseModel):
     """Représentation publique d'un utilisateur."""
 
-    id: int
-    username: str
-    email: str
+    name: str
     role: UserRole
     is_active: bool
 
