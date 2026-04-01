@@ -1,10 +1,18 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 
 from app.core.database import Base, get_engine
 from app.core.settings import get_settings
-from app.routers import auth, private_user, public
+from app.routers import (
+    auth,
+    private_match,
+    private_players,
+    private_team,
+    private_user,
+    public,
+)
 from app.utils.set_up_log import get_logger, set_up_logging
 
 
@@ -13,7 +21,8 @@ def create_app() -> FastAPI:
 
     settings = get_settings()
 
-    set_up_logging(settings.log_config_path)
+    log_config_path = Path(settings.log_config_path).resolve()
+    set_up_logging(log_config_path)
     logger = get_logger(__name__)
 
     @asynccontextmanager
@@ -37,9 +46,12 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    app.include_router(public.router)
     app.include_router(auth.router)
+    app.include_router(public.router)
     app.include_router(private_user.router)
+    app.include_router(private_players.router)
+    app.include_router(private_team.router)
+    app.include_router(private_match.router)
 
     return app
 

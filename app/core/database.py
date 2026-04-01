@@ -43,7 +43,8 @@ def get_session_maker():
 
 def get_db() -> Generator[Session, None, None]:
     """Provide a database session"""
-    db = get_session_maker()
+    SessionLocal = get_session_maker()
+    db = SessionLocal()
     try:
         yield db
     finally:

@@ -6,9 +6,9 @@ from app.core.security import hash_password
 from app.models.user import User, UserRole
 
 
-def get_user_by_name(db: Session, username: str) -> Optional[User]:
+def get_user_by_name(db: Session, name: str) -> Optional[User]:
     """Recherche un utilisateur par son nom d'utilisateur"""
-    return db.query(User).filter(User.username == username).first()
+    return db.query(User).filter(User.name == name).first()
 
 
 def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
@@ -23,8 +23,7 @@ def get_all_users(db: Session) -> list[User]:
 
 def create_user(
     db: Session,
-    username: str,
-    full_name: str,
+    name: str,
     password: str,
     role: UserRole | str = UserRole.USER.value,
     is_active: bool = True,
@@ -36,8 +35,7 @@ def create_user(
     password_hash = hash_password(password)
 
     user = User(
-        username=username,
-        full_name=full_name,
+        name=name,
         password_hash=password_hash,
         role=role.value if isinstance(role, UserRole) else role,
         is_active=is_active,

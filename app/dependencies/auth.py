@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core import decode_access_token, get_db
 from app.models import User, UserRole
-from app.services.user import get_user_by_username
+from app.services.user import get_user_by_name
 
 security_scheme = HTTPBearer()
 
@@ -34,7 +34,7 @@ def get_current_user(
             detail="Invalid token payload",
         )
 
-    user = get_user_by_username(db, username)
+    user = get_user_by_name(db, username)
 
     if not user or not user.is_active:
         raise HTTPException(

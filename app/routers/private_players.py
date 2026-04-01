@@ -17,7 +17,7 @@ from app.services.player import (
     get_player_by_nickname,
 )
 
-router = APIRouter(prefix="/private", tags=["Private"])
+router = APIRouter(prefix="/private", tags=["PLayer"])
 
 
 @router.get("/players/", response_model=APIResponse[List[PlayerRead]])
@@ -89,7 +89,14 @@ def create_new_player(
     db: Session = Depends(get_db),
 ) -> APIResponse[PlayerRead]:
     """Crée un nouveau joueur."""
-    player = create_player(db, nickname=player_in.nickname)
+    existing_player = get_player_by_nickname(db, player_in.nickname)
+    if existing_player:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Ce nom de joueur existe déjà.",
+        )
+
+    player = create_player(db, player_in)
     return APIResponse(
         status=True,
         data=PlayerRead(id=player.id, nickname=player.nickname),
@@ -106,6 +113,13 @@ def update_player(
     db: Session = Depends(get_db),
 ) -> APIResponse[PlayerRead]:
     """Met à jour un joueur existant."""
+    existing_player = get_player_by_nickname(db, player_in.nickname)
+    if existing_player:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Ce nom de joueur existe déjà.",
+        )
+
     player = get_player_by_id(db, player_id)
     if not player:
         raise HTTPException(

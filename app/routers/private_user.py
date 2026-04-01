@@ -11,7 +11,7 @@ from app.schemas.user import UserPublic
 from app.schemas.utils import APIResponse, MessageResponse
 from app.services.user import delete_user_by_id, get_all_users
 
-router = APIRouter(prefix="/private", tags=["Private"])
+router = APIRouter(prefix="/private", tags=["User"])
 
 
 @router.get("/me", response_model=APIResponse[UserPublic])

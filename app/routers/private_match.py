@@ -17,7 +17,7 @@ from app.services.match import (
     update_match,
 )
 
-router = APIRouter(prefix="/private", tags=["Private"])
+router = APIRouter(prefix="/private", tags=["Match"])
 
 
 @router.get("/matches/", response_model=APIResponse[List[MatchRead]])

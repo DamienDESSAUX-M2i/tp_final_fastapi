@@ -23,8 +23,8 @@ class TeamCreate(TeamBase):
 
 class TeamUpdate(BaseModel):
     name: Optional[str] = Field(None, max_length=50)
-    player_one_id: Optional[int]
-    player_two_id: Optional[int]
+    player_one_id: Optional[int] = None
+    player_two_id: Optional[int] = None
 
     @model_validator(mode="after")
     def validate_players(self):
